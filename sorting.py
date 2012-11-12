@@ -31,6 +31,8 @@ def merge(arr_a, arr_b):
 
 def quicksort(a):
     """ quicksort implementation in python
+    NOTE: This algo uses O(n) extra space
+    to compute quicksort.
 
     >>> quicksort([6, 4, 8, 2, 1, 9, 10])
     [1, 2, 4, 6, 8, 9, 10]
@@ -60,10 +62,10 @@ def selectionsort(a):
         a[i],a[min] = a[min], a[i]
     return a
 
-def insertionsort(a):
-    """ insertion sort implementation
+def bubblesort(a):
+    """ bubble sort implementation
     
-    >>> insertionsort([6, 4, 8, 2, 1, 9, 10])
+    >>> bubblesort([6, 4, 8, 2, 1, 9, 10])
     [1, 2, 4, 6, 8, 9, 10]
     """
     for i in range(len(a)):
@@ -72,6 +74,19 @@ def insertionsort(a):
                 a[i], a[j] = a[j], a[i]
     return a
 
+
+def insertionsort(a):
+    """ insertion sort implementation
+    >>> insertionsort([6, 4, 8, 2, 1, 9, 10])
+    [1, 2, 4, 6, 8, 9, 10]
+    """
+    for i in range(len(a)):
+        item = a[i]
+        j = i
+        while j > 0 and a[j-1] > item:
+            a[j],a[j-1] = a[j-1],a[j]
+            j -= 1
+    return a
 
 if __name__ == "__main__":
     import doctest
