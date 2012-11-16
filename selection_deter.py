@@ -1,3 +1,4 @@
+# selection problem solved deterministically
 from sorting import mergesort
 def median_of_medians(a):
     n = len(a)
