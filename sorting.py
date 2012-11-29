@@ -42,9 +42,9 @@ def quicksort(a):
         return a
     else:
         from random import randrange
-        pivot = a[randrange(n)]
+        pivot = a.pop(randrange(n))
         lesser = quicksort([x for x in a if x < pivot])
-        greater = quicksort([x for x in a if x > pivot])
+        greater = quicksort([x for x in a if x >= pivot])
         return lesser + [pivot] + greater
 
 
