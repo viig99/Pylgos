@@ -2,9 +2,11 @@ class graph(object):
     """
     Graph class - made of nodes and edges
 
-    methods: add_edge, add_node, has_node, has_edge, nodes, edges,
-    neighbors, del_node, del_edge, node_order, set_edge_weight, 
+    methods: add_edge, add_edges, add_node, add_nodes, has_node,
+    has_edge, nodes, edges, add_node_attribute, node_attributes
+    neighbors, del_node, del_edge, node_order, set_edge_weight,
     get_edge_weight, set_edge_properties, get_edge_properties
+    clear_node_attributes
     """
 
     DEFAULT_WEIGHT = 1
@@ -26,12 +28,14 @@ class graph(object):
         for node in nodes:
             self.add_node(node)
 
-    def add_node(self, node):
+    def add_node(self, node, attrs=None):
         """
         Adds a node to the graph
         """
         if node not in self.node_neighbors:
+            if attrs is None: attrs = []
             self.node_neighbors[node] = []
+            self.node_attr[node] = attrs
         else:
             raise Exception("Node %s is already in graph" % node)
 
@@ -54,6 +58,12 @@ class graph(object):
             self.set_edge_properties((u, v), label=label, weight=wt)
         else:
             raise Exception("Edge (%s, %s) already added in the graph" % (u, v))
+
+    def add_edges(self, edges):
+        """ Adds multiple edges in one go. Edges, here, is a list of
+        tuples"""
+        for edge in edges:
+            self.add_edge(edge)
 
     def nodes(self):
         """
@@ -141,3 +151,17 @@ class graph(object):
         """Returns the weight of an edge """
         return self.get_edge_properties(edge).setdefault("weight", self.DEFAULT_WEIGHT)
 
+    def add_node_attribute(self, node, attr):
+        """ Adds attributes to a node"""
+        if not self.has_node(node):
+            raise Exception("Node %s does not exist in graph" % node)
+        self.node_attr[node] = attr
+
+    def node_attributes(self, node):
+        """ Returns attributes of a node if it exists, none otherwise"""
+        return self.node_attr[node]
+
+    def clear_node_attributes(self):
+        """ Clears the attributes set on nodes """
+        for node in self.nodes():
+            self.node_attr[node] = []
